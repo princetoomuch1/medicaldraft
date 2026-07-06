@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 
 export function useMapData(bounds: { west: number; south: number; east: number; north: number }) {
   const [data, setData] = useState<any[]>([]);

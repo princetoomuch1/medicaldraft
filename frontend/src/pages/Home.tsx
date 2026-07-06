@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense, lazy } from "react";
+
+const LazyAdvancedHero = lazy(() => import('../components/AdvancedHero'));
 
 /*
   Landing page hero sequence.
@@ -12,6 +14,7 @@ export default function HomePage() {
   const heroRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [ready, setReady] = useState(false);
+  const [show3D, setShow3D] = useState(false);
 
   useEffect(() => {
     let ctx: any = null;
@@ -116,6 +119,22 @@ export default function HomePage() {
                 </g>
               </g>
             </svg>
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button onClick={() => setShow3D(s => !s)} style={{ padding: '8px 12px', borderRadius: 8, background: '#0F1210', color: 'var(--paper-bg)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                {show3D ? 'Hide 3D demo' : 'Enable 3D demo'}
+              </button>
+              <div style={{ color: 'var(--text-secondary)', alignSelf: 'center' }}>3D preview is lazy-loaded and respects reduced-motion.</div>
+            </div>
+
+            {show3D && (
+              <div style={{ marginTop: 12 }}>
+                <Suspense fallback={<div style={{ color: 'var(--text-secondary)' }}>Loading 3D demo…</div>}>
+                  <LazyAdvancedHero />
+                </Suspense>
+              </div>
+            )}
           </div>
         </div>
       </div>
