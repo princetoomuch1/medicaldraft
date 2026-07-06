@@ -1,26 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
     /* Color tokens - dark (dashboard) */
-    --bg: #0F1210; /* off-black, night-shift */
+    --bg: #0F1210;
+    /* off-black, night-shift */
     --surface: #171B18;
     --text-primary: #E8E6DE;
     --text-secondary: #8B9188;
     --accent-critical: #C0392B;
     --signal-normal: #4A7C6E;
     --amber-warm: #B8860B;
-
     /* Public landing (light) */
     --paper-bg: #F7F4ED;
     --ink: #1A1D1B;
-
     /* Motion timing */
     --ease-clinical: cubic-bezier(0.16, 1, 0.3, 1);
-
     /* Typography */
-    --font-heading: 'Space Grotesk', sans-serif; /* Fraunces only for editorial pages */
+    --font-heading: 'Space Grotesk', sans-serif;
+    /* Fraunces only for editorial pages */
     --font-editorial: 'Fraunces', serif;
     --font-mono: 'IBM Plex Mono', monospace;
     --font-ui: 'Plus Jakarta Sans', sans-serif;
-
     color-scheme: dark;
     font-family: var(--font-ui);
     background: var(--bg);
@@ -46,9 +47,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+
 /* Reduced motion respect */
+
 @media (prefers-reduced-motion: reduce) {
-    :root {
+     :root {
         scroll-behavior: auto;
     }
     * {
