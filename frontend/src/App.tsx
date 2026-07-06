@@ -1,7 +1,12 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { MapContainer, TileLayer, CircleMarker, useMapEvents } from "react-leaflet";
-import axios from "axios";
+import { Link, Routes, Route } from "react-router-dom";
+import axios from "./api/axiosConfig";
 import { useMapData } from "./hooks/useMapData";
+import HomePage from "./pages/Home";
+import DashboardPage from "./pages/Dashboard";
+import LoginPage from "./pages/Login";
+import CaseDetailPage from "./pages/CaseDetail";
 import "leaflet/dist/leaflet.css";
 
 const center: [number, number] = [20.5937, 78.9629];
@@ -82,45 +87,23 @@ function App() {
   }
 
   return (
-    <div style={{ height: "100vh", width: "100vw" }}>
-      <MapContainer center={center} zoom={5} style={{ height: "100%", width: "100%" }}>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <MapEvents onBoundsChange={setBounds} />
-        {markers}
-      </MapContainer>
-
-      <div style={{ position: "absolute", top: 16, right: 16, zIndex: 1000, background: "white", padding: 16, borderRadius: 8, width: 280 }}>
-        <h3 style={{ marginTop: 0 }}>Report Case</h3>
-        <form onSubmit={submitCase}>
-          <label style={{ display: "block", marginBottom: 8 }}>
-            Diagnosis
-            <input value={form.diagnosis} onChange={(e) => setForm({ ...form, diagnosis: e.target.value })} style={{ width: "100%", marginTop: 4 }} />
-          </label>
-          <label style={{ display: "block", marginBottom: 8 }}>
-            Severity
-            <select value={form.severity} onChange={(e) => setForm({ ...form, severity: e.target.value })} style={{ width: "100%", marginTop: 4 }}>
-              <option value="critical">Critical</option>
-              <option value="high">High</option>
-              <option value="moderate">Moderate</option>
-              <option value="low">Low</option>
-            </select>
-          </label>
-          <label style={{ display: "block", marginBottom: 8 }}>
-            Latitude
-            <input value={form.latitude} onChange={(e) => setForm({ ...form, latitude: e.target.value })} style={{ width: "100%", marginTop: 4 }} />
-          </label>
-          <label style={{ display: "block", marginBottom: 8 }}>
-            Longitude
-            <input value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} style={{ width: "100%", marginTop: 4 }} />
-          </label>
-          <button type="submit" style={{ width: "100%" }}>Submit Case</button>
-        </form>
-        {loading && <p>Loading cases…</p>}
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/case/:id" element={<CaseDetailPage />} />
+      <Route
+        path="/*"
+        element={
+          <div style={{ padding: 20 }}>
+            <h1>Page not found</h1>
+            <p>
+              Return <Link to="/">home</Link>.
+            </p>
+          </div>
+        }
+      />
+    </Routes>
   );
 }
 
